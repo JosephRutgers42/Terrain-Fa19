@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanePilot : MonoBehaviour
 {
+    public Text countText;
     public float speed = 90.0f;
+    private int count;
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("plane pilot script added to: " + gameObject.name);
+        count = 0;
+        SetCountText();
     }
 
     // Update is called once per frame
@@ -32,4 +37,21 @@ public class PlanePilot : MonoBehaviour
             transform.position = new Vector3(transform.position.x, terrainHeightWhereWeAre, transform.position.z);
         }
     }
+    void OnTriggerEnter(Collider other)
+    {
+        print("i hit it");
+        if (other.gameObject.CompareTag("Pick Up"))
+
+        {
+            other.gameObject.SetActive(false);
+            count = count + 1;
+            SetCountText();
+            
+        } 
+    }
+
+    void SetCountText() {
+        countText.text = "Count: " + count.ToString();
+    }
+
 }
